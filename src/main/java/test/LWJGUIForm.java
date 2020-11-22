@@ -1,11 +1,9 @@
 package test;
 
-import org.mini.gui.GCallBack;
 import org.mini.gui.GForm;
 
 import lwjgui.scene.Scene;
 import lwjgui.scene.Window;
-import lwjgui.scene.WindowHandle;
 import lwjgui.scene.WindowManager;
 import lwjgui.scene.control.Label;
 import lwjgui.scene.layout.StackPane;
@@ -16,13 +14,8 @@ public class LWJGUIForm extends GForm {
 	public LWJGUIForm() {
 		super();
 		
-		// Create fake GLFW desktop window
-		// This wont actually do anything... LWJGL-MiniJVM wrapper will act as pass-through
-		WindowHandle handle = WindowManager.generateHandle(GCallBack.getInstance().getDeviceWidth(), GCallBack.getInstance().getDeviceHeight(), "Window");
-       
-		// Wrap (fake) GLFW window to LWJGUI window
-		window = WindowManager.generateWindow(handle);
-
+		// Create (fake) GLFW window. Wrap to LWJGUI window
+		window = WindowManager.generateWindow(0);
 		
 		// Get scene
 		Scene scene = window.getScene();
