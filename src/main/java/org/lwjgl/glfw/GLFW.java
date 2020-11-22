@@ -230,62 +230,62 @@ public class GLFW extends Glfw {
 	}
 	
 	public static CursorPosCallback glfwSetCursorPosCallback(long window, CursorPosCallback callback) {
-		return callback;
+		return new CursorPosCallback();
 	}
 	
 	public static CharCallback glfwSetCharCallback(long window, CharCallback callback) {
-		return callback;
+		return new CharCallback();
 	}
 	
 	public static KeyCallback glfwSetKeyCallback(long window, KeyCallback callback) {
-		return callback;
+		return new KeyCallback();
 	}
 	
 	public static MouseButtonCallback glfwSetMouseButtonCallback(long window, MouseButtonCallback callback) {
-		return callback;
+		return new MouseButtonCallback();
 	}
 	
 	public static WindowFocusCallback glfwSetWindowFocusCallback(long window, WindowFocusCallback callback) {
-		return callback;
+		return new WindowFocusCallback();
 	}
 	
 	public static WindowCloseCallback glfwSetWindowCloseCallback(long window, WindowCloseCallback callback) {
-		return callback;
+		return new WindowCloseCallback();
 	}
 	
 	public static WindowSizeCallback glfwSetWindowSizeCallback(long window, WindowSizeCallback callback) {
-		return callback;
+		return new WindowSizeCallback();
 	}
 	
 	public static ScrollCallback glfwSetScrollCallback(long window, ScrollCallback callback) {
-		return callback;
+		return new ScrollCallback();
 	}
 	
 	public static WindowIconifyCallback glfwSetWindowIconifyCallback(long window, WindowIconifyCallback callback) {
-		return callback;
+		return new WindowIconifyCallback();
 	}
 	
 	public static FramebufferSizeCallback glfwSetFramebufferSizeCallback(long window, FramebufferSizeCallback callback) {
-		return callback;
+		return new FramebufferSizeCallback();
 	}
 	
 	public static CursorEnterCallback glfwSetCursorEnterCallback(long window, CursorEnterCallback callback) {
-		return callback;
+		return new CursorEnterCallback();
 	}
 	
 	public static CharModsCallback glfwSetCharModsCallback(long window, CharModsCallback callback) {
-		return callback;
+		return new CharModsCallback();
 	}
 	
 	public static WindowPosCallback glfwSetWindowPosCallback(long window, WindowPosCallback callback) {
-		return callback;
+		return new WindowPosCallback();
 	}
 	
 	public static WindowMaximizeCallback glfwSetWindowMaximizeCallback(long window, WindowMaximizeCallback callback) {
-		return callback;
+		return new WindowMaximizeCallback();
 	}
 	
 	public static WindowRefreshCallback glfwSetWindowRefreshCallback(long window, WindowRefreshCallback callback) {
-		return callback;
+		return new WindowRefreshCallback();
 	}
 }

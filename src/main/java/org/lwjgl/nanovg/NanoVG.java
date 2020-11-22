@@ -1,11 +1,5 @@
 package org.lwjgl.nanovg;
 
-import static org.mini.nanovg.Nanovg.nvgCreateNVGglyphPosition;
-import static org.mini.nanovg.Nanovg.nvgNVGglyphPosition_x;
-import static org.mini.nanovg.Nanovg.nvgTextBoundsJni;
-import static org.mini.nanovg.Nanovg.nvgTextBoxJni;
-import static org.mini.nanovg.Nanovg.nvgTextGlyphPositionsJni;
-
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 

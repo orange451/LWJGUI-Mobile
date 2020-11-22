@@ -193,12 +193,14 @@ public class LWJGUIUtil {
 		
 		if ( color == null )
 			return;
+		
+		long nvg = context.getNVG();
 
-		NanoVG.nvgBeginPath(context.getNVG());
-		NanoVG.nvgRect(context.getNVG(), (int)x, (int)y, (int)width, (int)height);
-		NanoVG.nvgFillColor(context.getNVG(), color.getNVG());
-		NanoVG.nvgFill(context.getNVG());
-		NanoVG.nvgClosePath(context.getNVG());
+		NanoVG.nvgBeginPath(nvg);
+		NanoVG.nvgRect(nvg, (int)x, (int)y, (int)width, (int)height);
+		NanoVG.nvgFillColor(nvg, color.getNVG());
+		NanoVG.nvgFill(nvg);
+		NanoVG.nvgClosePath(nvg);
 	}
 
 	/**
