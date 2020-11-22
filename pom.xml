@@ -44,14 +44,12 @@
             <scope>system</scope>
             <systemPath>${basedir}/../../../binary/libex/glfm_gui.jar</systemPath>
         </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/org.joml/joml -->
+		<!-- https://mvnrepository.com/artifact/org.joml/joml -->
 		<dependency>
 		    <groupId>org.joml</groupId>
 		    <artifactId>joml</artifactId>
 		    <version>1.9.25</version>
-		</dependency>
-		        
+		</dependency>		        
     </dependencies>
 
     <build>
