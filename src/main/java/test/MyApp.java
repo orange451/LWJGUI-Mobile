@@ -2,6 +2,9 @@ package test;
 
 import org.mini.gui.*;
 
+import lwjgui.scene.Window;
+import lwjgui.scene.WindowManager;
+
 public class MyApp extends GApplication {
 
     GForm form;
@@ -16,21 +19,21 @@ public class MyApp extends GApplication {
         GLanguage.setCurLang(GLanguage.ID_ENG);
         
         // Create elements
-        form = new GForm();
-        frame = new TestPane(); // OpenGL Drawing inside
+        form = new LWJGUIForm();
+        /*frame = new TestPane(); // OpenGL Drawing inside
         
-        // Add elements
-        form.add(frame);
+        // Setup elements
         form.setSize(GCallBack.getInstance().getDeviceWidth(), GCallBack.getInstance().getDeviceHeight());
+        frame.setSize(form.getW(), form.getH());
+        form.add(frame);
         
         // Resize logic
         form.setSizeChangeListener((width, height) -> {
         	frame.setSize(width, height);
         	System.out.println("Resizing");
-        });
+        });*/
         
-        System.out.println("Created form with size:" + form.getW() + " / " + form.getH());
-        form.reSize();
+        GForm.addMessage("Hello World!");;
         return form;
     }
 }
