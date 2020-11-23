@@ -22,7 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.management.ManagementFactory;
+import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -293,7 +293,7 @@ public class LWJGUIUtil {
 	 */
 	public static boolean restartJVMOnFirstThread( boolean needsOutput, String... args ) {
 		// Figure out the right class to call
-		StackTraceElement[] cause = Thread.currentThread().getStackTrace();
+		/*StackTraceElement[] cause = Thread.currentThread().getStackTrace();
 
 		boolean foundThisMethod = false;
 		String callingClassName = null;
@@ -319,7 +319,7 @@ public class LWJGUIUtil {
 			return restartJVMOnFirstThread( needsOutput, theClass, args );
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		return false;
 	}
@@ -343,6 +343,8 @@ public class LWJGUIUtil {
 	 */
 	public static boolean restartJVMOnFirstThread(boolean needsOutput, Class<?> customClass, String... args) {
 
+		return false;
+		/*
 		// If we're already on the first thread, return
 		String startOnFirstThread = System.getProperty("XstartOnFirstThread");
 		if ( startOnFirstThread != null && startOnFirstThread.equals("true") )
@@ -355,7 +357,7 @@ public class LWJGUIUtil {
 		}
 
 		// get current jvm process pid
-		String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+		String pid = java.lang.management.ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
 		// get environment variable on whether XstartOnFirstThread is enabled
 		String env = System.getenv("JAVA_STARTED_ON_FIRST_THREAD_" + pid);
 
@@ -370,7 +372,7 @@ public class LWJGUIUtil {
 		String mainClass = System.getenv("JAVA_MAIN_CLASS_" + pid);
 		String jvmPath = System.getProperty("java.home") + separator + "bin" + separator + "java";
 
-		List<String> inputArguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
+		List<String> inputArguments = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments();
 
 		ArrayList<String> jvmArgs = new ArrayList<String>();
 
@@ -420,7 +422,7 @@ public class LWJGUIUtil {
 			}
 		}
 
-		return true;
+		return true;*/
 	}
 
 	/**

@@ -33,8 +33,8 @@ public class GenericShader {
 
 	public GenericShader() {
 		this(
-				GenericShader.class.getResource("vertex.glsl"),
-				GenericShader.class.getResource("fragment.glsl")
+				Thread.currentThread().getContextClassLoader().getResource("lwjgui/gl/vertex.glsl"),
+				Thread.currentThread().getContextClassLoader().getResource("lwjgui/gl/fragment.glsl")
 			);
 	}
 
@@ -108,15 +108,21 @@ public class GenericShader {
 	}
 
 	protected static int compileShader(URL url, boolean isVertex) {
-		if ( url == null )
+		if (url == null)
 			return -1;
-		
+
 		try (InputStream in = url.openStream();
 				InputStreamReader isr = new InputStreamReader(in);
 				BufferedReader br = new BufferedReader(isr)) {
-			String source = br.lines().collect(Collectors.joining("\n"));
+
+			String source = "";
+			String st;
+			while ((st = br.readLine()) != null)
+				source += st + "\n";
 			return compileShader(source, isVertex);
-		} catch (IOException ex) {
+		} catch (
+
+		IOException ex) {
 			throw new RuntimeException("can't compile shader at: " + url, ex);
 		}
 	}
