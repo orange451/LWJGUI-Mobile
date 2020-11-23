@@ -1,6 +1,10 @@
 package lwjgui.gl;
 
 import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
+import static org.mini.gl.GL.GL_RENDERER;
+import static org.mini.gl.GL.GL_VENDOR;
+import static org.mini.gl.GL.GL_VERSION;
+import static org.mini.gl.GL.glGetString;
 
 import java.io.*;
 import java.net.URL;
@@ -16,6 +20,7 @@ import org.lwjgl.opengl.GL20;
 
 import lwjgui.LWJGUI;
 import lwjgui.scene.Context;
+import lwjgui.util.OperatingSystem;
 
 public class GenericShader {
 	private final int id;
@@ -39,7 +44,6 @@ public class GenericShader {
 	}
 
 	public GenericShader(URL vertexShader, URL fragmentShader) {
-
 		// make the shader
 		vertexId = compileShader(vertexShader, true);
 		fragmentId = compileShader(fragmentShader, false);
@@ -111,18 +115,22 @@ public class GenericShader {
 		if (url == null)
 			return -1;
 
-		try (InputStream in = url.openStream();
-				InputStreamReader isr = new InputStreamReader(in);
-				BufferedReader br = new BufferedReader(isr)) {
+		try {
+			InputStream in = url.openStream();
+			InputStreamReader isr = new InputStreamReader(in);
+			BufferedReader br = new BufferedReader(isr);
 
 			String source = "";
 			String st;
 			while ((st = br.readLine()) != null)
 				source += st + "\n";
+			
+			br.close();
+			isr.close();
+			in.close();	 
+			
 			return compileShader(source, isVertex);
-		} catch (
-
-		IOException ex) {
+		} catch (IOException ex) {
 			throw new RuntimeException("can't compile shader at: " + url, ex);
 		}
 	}
@@ -136,10 +144,15 @@ public class GenericShader {
 			type = GL20.GL_FRAGMENT_SHADER;
 		}
 
-		// try to massage JavaFX shaders into modern OpenG
-		if (source.startsWith("#ifdef GL_ES\n")) {
+		// try to massage JavaFX shaders into modern OpenGL
+		if (source.startsWith("#ifdef GL_ES\n")) 
 			source = modernizeShader(source, isVertex);
-		}
+		
+		// Is ES
+        String glVersion = new String(glGetString(GL_VERSION));
+        boolean isOpenGLES = glVersion.contains("OpenGL ES");
+        if ( isOpenGLES )
+        	source = source.replace("#version 330", "#version 300 es\r\nprecision highp float;\r\nprecision highp sampler2DShadow;\r\n");
 
 		int id = GL20.glCreateShader(type);
 		GL20.glShaderSource(id, source);

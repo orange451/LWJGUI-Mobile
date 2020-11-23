@@ -33,8 +33,8 @@ public class LWJGUIForm extends GForm {
 		root.getChildren().add(t);
 
 		// Set Scene data
-		//Label testLabel = new Label("Hello World");
-		//root.getChildren().add(testLabel);
+		Label testLabel = new Label("Hello World");
+		t.getChildren().add(testLabel);
 		
 		this.setSizeChangeListener((width, height)-> {
 			updateSize();

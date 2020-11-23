@@ -178,10 +178,9 @@ public class NanoVG extends Nanovg {
 	}
 
 	public static float[] nvgTextBounds(long nvg, float i, float j, String string, float[] bounds) {
-        float[] bond = new float[4];
         byte[] dat = toUtf8(string);
-        Nanovg.nvgTextBoundsJni(nvg, i, j, dat, 0, dat.length, bond);
-        return bond;
+        Nanovg.nvgTextBoundsJni(nvg, i, j, dat, 0, dat.length, bounds);
+        return bounds;
 	}
 
 	public static Buffer nvgTextGlyphPositions(long nvg, int i, int j, String string, Buffer positions) {

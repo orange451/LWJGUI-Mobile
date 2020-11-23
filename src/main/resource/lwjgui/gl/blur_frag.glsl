@@ -45,7 +45,7 @@ void main(void) {
 			min(
 				roundCorner( vec2(0.0, 1.0), vec2(0, 1.0 / uTexelSize.y) - vec2( -uCornerRadii.x, uCornerRadii.x ), uCornerRadii.x, passTexCoord ),
 				min(
-					roundCorner( vec2(1.0, 0), vec2(1.0 / uTexelSize.x, 0) - vec2( uCornerRadii.z, -uCornerRadii.z ), uCornerRadii.z, passTexCoord ),
+					roundCorner( vec2(1.0, 0.0), vec2(1.0 / uTexelSize.x, 0.0) - vec2( uCornerRadii.z, -uCornerRadii.z ), uCornerRadii.z, passTexCoord ),
 					roundCorner( vec2(1.0), (1.0 / uTexelSize) - vec2( uCornerRadii.y ), uCornerRadii.y, passTexCoord )
 				)
 			)
