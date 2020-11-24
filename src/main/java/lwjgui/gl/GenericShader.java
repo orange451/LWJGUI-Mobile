@@ -1,17 +1,11 @@
 package lwjgui.gl;
 
 import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
-import static org.mini.gl.GL.GL_RENDERER;
-import static org.mini.gl.GL.GL_VENDOR;
-import static org.mini.gl.GL.GL_VERSION;
-import static org.mini.gl.GL.glGetString;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-import java.util.stream.*;
-
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -20,7 +14,6 @@ import org.lwjgl.opengl.GL20;
 
 import lwjgui.LWJGUI;
 import lwjgui.scene.Context;
-import lwjgui.util.OperatingSystem;
 
 public class GenericShader {
 	private final int id;
@@ -148,8 +141,8 @@ public class GenericShader {
 		if (source.startsWith("#ifdef GL_ES\n")) 
 			source = modernizeShader(source, isVertex);
 		
-		// Is ES
-        String glVersion = new String(glGetString(GL_VERSION));
+		// If ES
+        String glVersion = new String(GL11.glGetString(GL11.GL_VERSION));
         boolean isOpenGLES = glVersion.contains("OpenGL ES");
         if ( isOpenGLES )
         	source = source.replace("#version 330", "#version 300 es\r\nprecision highp float;\r\nprecision highp sampler2DShadow;\r\n");

@@ -1,7 +1,12 @@
 package test;
 
+import org.lwjgl.glfw.GLFW;
+import org.mini.glfm.Glfm;
 import org.mini.gui.GForm;
+import org.mini.gui.GObject;
+import org.mini.gui.event.GActionListener;
 
+import lwjgui.LWJGUIUtil;
 import lwjgui.paint.Color;
 import lwjgui.scene.Scene;
 import lwjgui.scene.Window;
@@ -26,16 +31,28 @@ public class LWJGUIForm extends GForm {
 		
 		// Test
 		StackPane t = new StackPane();
-		t.setBackgroundLegacy(Color.ORANGE);
-		t.setBorderRadii(8);
-		t.setPrefSize(128, 128);
-		t.getBoxShadowList().add(new BoxShadow(8, 8, 32f));
+		t.getClassList().add("test-button");
 		root.getChildren().add(t);
+		
+		t.setStylesheet(""
+				+ ".test-button {"
+				+ "		background-color:yellow;"
+				+ "		border-radius:8px;"
+				+ "		width:128px;"
+				+ "		height:128px;"
+				+ "		box-shadow:12px 12px 32px;"
+				+ "}"
+				+ ""
+				+ ".text-button:hover {"
+				+ "		background-color:orange;"
+				+ "}"
+				+ "");
 
 		// Set Scene data
 		Label testLabel = new Label("Hello World");
 		t.getChildren().add(testLabel);
 		
+		// Resize when parent changes
 		this.setSizeChangeListener((width, height)-> {
 			updateSize();
 		});
@@ -45,8 +62,19 @@ public class LWJGUIForm extends GForm {
 		window.show();         		
 	}
 	
+    @Override
+    public void mouseButtonEvent(int button, boolean pressed, int x, int y) {
+    	window.getCursorPosCallback().invoke(window.getID(), x, y);
+    	window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, pressed?1:0, 0);
+    }
+
+    @Override
+    public void touchEvent(int touchid, int phase, int x, int y) {
+    	window.getCursorPosCallback().invoke(window.getID(), x, y);
+    }
+	
 	private void updateSize() {
-		window.setSize(this.callback.getDeviceWidth(), this.callback.getDeviceHeight());
+		window.getWindowSizeCallback().invoke(window.getID(), this.callback.getDeviceWidth(), this.callback.getDeviceHeight());
 		window.getFramebufferSizeCallback().invoke(window.getID(), this.callback.getFrameBufferWidth(), this.callback.getFrameBufferHeight());
 	}
 
@@ -60,6 +88,9 @@ public class LWJGUIForm extends GForm {
 		
 		// Render our lwjgui window
 		window.render();
+
+		LWJGUIUtil.fillRect(window.getContext(), 0, 0, window.getScene().getRoot().getWidth(), window.getScene().getRoot().getHeight(), Color.GRAY);
+		LWJGUIUtil.fillRect(window.getContext(), window.getMouseHandler().getX(), window.getMouseHandler().getY(), 8, 8, Color.RED);
 		
 		// Force flush
 		GForm.flush();
