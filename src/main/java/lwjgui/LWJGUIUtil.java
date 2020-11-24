@@ -537,11 +537,11 @@ public class LWJGUIUtil {
 		if ( startOnFirstThread != null && startOnFirstThread.equals("true") )
 			return false;
 		
-		if ( OperatingSystem.detect() == OperatingSystem.MAC )
+		if ( OperatingSystem.detect() == OperatingSystem.IOS )
 			return false;
 		
 		// Figure out the right class to call
-		/*StackTraceElement[] cause = Thread.currentThread().getStackTrace();
+		StackTraceElement[] cause = Thread.currentThread().getStackTrace();
 
 		boolean foundThisMethod = false;
 		String callingClassName = null;
@@ -567,7 +567,7 @@ public class LWJGUIUtil {
 			return restartJVMOnFirstThread( needsOutput, theClass, args );
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}*/
+		}
 		
 		return false;
 	}
@@ -596,7 +596,7 @@ public class LWJGUIUtil {
 			return false;
 		
 		// Force return if we're on ios.
-		if ( OperatingSystem.detect() == OperatingSystem.MAC )
+		if ( OperatingSystem.detect() == OperatingSystem.IOS )
 			return false;
 
 		// if not a mac then we're already on first thread, return.
@@ -606,7 +606,7 @@ public class LWJGUIUtil {
 		}
 
 		// get current jvm process pid
-		/*String pid = "";
+		String pid = "";
 		try { pid = java.lang.management.ManagementFactory.getRuntimeMXBean().getName().split("@")[0]; } catch(Exception e) {}
 		// get environment variable on whether XstartOnFirstThread is enabled
 		String env = System.getenv("JAVA_STARTED_ON_FIRST_THREAD_" + pid);
@@ -671,7 +671,7 @@ public class LWJGUIUtil {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 
 		return true;
 	}

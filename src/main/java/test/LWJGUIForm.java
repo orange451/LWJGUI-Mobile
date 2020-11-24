@@ -105,4 +105,9 @@ public class LWJGUIForm extends GForm {
 		GForm.flush();
 		return true;
 	}
+	
+	@Override
+	public void display(long vg) {
+		paint(vg);
+	}
 }
