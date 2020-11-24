@@ -98,6 +98,7 @@ public class LWJGUIForm extends GForm {
 		// Render our lwjgui window
 		window.render();
 
+		LWJGUIUtil.fillRect(window.getContext(), 0, 0, window.getScene().getWidth(), window.getScene().getHeight(), Color.DIM_GRAY);
 		LWJGUIUtil.fillRect(window.getContext(), window.getMouseHandler().getX()-4, window.getMouseHandler().getY()-4, 8, 8, Color.RED);
 		
 		// Force flush
