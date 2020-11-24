@@ -43,7 +43,7 @@ public class LWJGUIForm extends GForm {
 				+ "		box-shadow:12px 12px 32px;"
 				+ "}"
 				+ ""
-				+ ".text-button:hover {"
+				+ ".test-button:active {"
 				+ "		background-color:orange;"
 				+ "}"
 				+ "");
@@ -53,9 +53,7 @@ public class LWJGUIForm extends GForm {
 		t.getChildren().add(testLabel);
 		
 		// Resize when parent changes
-		this.setSizeChangeListener((width, height)-> {
-			updateSize();
-		});
+		this.setSizeChangeListener((width, height)-> { updateSize(); });
 		updateSize();
 
 		// Finalize window     
@@ -67,10 +65,21 @@ public class LWJGUIForm extends GForm {
     	window.getCursorPosCallback().invoke(window.getID(), x, y);
     	window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, pressed?1:0, 0);
     }
+    
+    private boolean touched;
 
     @Override
     public void touchEvent(int touchid, int phase, int x, int y) {
     	window.getCursorPosCallback().invoke(window.getID(), x, y);
+    	if ( phase == Glfm.GLFMTouchPhaseBegan && !touched ) {
+    		touched = true;
+    		window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, 1, 0);
+    	}    	
+    	
+    	if ( phase == Glfm.GLFMTouchPhaseEnded && touched ) {
+    		touched = false;
+    		window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, 0, 0);
+    	}
     }
 	
 	private void updateSize() {
@@ -89,8 +98,7 @@ public class LWJGUIForm extends GForm {
 		// Render our lwjgui window
 		window.render();
 
-		LWJGUIUtil.fillRect(window.getContext(), 0, 0, window.getScene().getRoot().getWidth(), window.getScene().getRoot().getHeight(), Color.GRAY);
-		LWJGUIUtil.fillRect(window.getContext(), window.getMouseHandler().getX(), window.getMouseHandler().getY(), 8, 8, Color.RED);
+		LWJGUIUtil.fillRect(window.getContext(), window.getMouseHandler().getX()-4, window.getMouseHandler().getY()-4, 8, 8, Color.RED);
 		
 		// Force flush
 		GForm.flush();
