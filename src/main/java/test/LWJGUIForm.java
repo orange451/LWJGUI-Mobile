@@ -25,33 +25,6 @@ public class LWJGUIForm extends GForm {
 		// Create (fake) GLFW window. Wrap to LWJGUI window
 		window = WindowManager.generateWindow(0);
 		
-		// Get scene
-		Scene scene = window.getScene();
-		StackPane root = (StackPane) scene.getRoot();
-		
-		// Test
-		StackPane t = new StackPane();
-		t.getClassList().add("test-button");
-		root.getChildren().add(t);
-		
-		t.setStylesheet(""
-				+ ".test-button {"
-				+ "		background-color:yellow;"
-				+ "		border-radius:8px;"
-				+ "		width:128px;"
-				+ "		height:128px;"
-				+ "		box-shadow:12px 12px 32px;"
-				+ "}"
-				+ ""
-				+ ".test-button:active {"
-				+ "		background-color:orange;"
-				+ "}"
-				+ "");
-
-		// Set Scene data
-		Label testLabel = new Label("Hello World");
-		t.getChildren().add(testLabel);
-		
 		// Resize when parent changes
 		this.setSizeChangeListener((width, height)-> { updateSize(); });
 		updateSize();
@@ -98,16 +71,11 @@ public class LWJGUIForm extends GForm {
 		// Render our lwjgui window
 		window.render();
 
-		LWJGUIUtil.fillRect(window.getContext(), 0, 0, window.getScene().getWidth(), window.getScene().getHeight(), Color.DIM_GRAY);
+		LWJGUIUtil.fillRect(window.getContext(), 0, 0, window.getScene().getWidth(), window.getScene().getHeight(), Color.WHITE_SMOKE);
 		LWJGUIUtil.fillRect(window.getContext(), window.getMouseHandler().getX()-4, window.getMouseHandler().getY()-4, 8, 8, Color.RED);
 		
 		// Force flush
 		GForm.flush();
 		return true;
-	}
-	
-	@Override
-	public void display(long vg) {
-		paint(vg);
 	}
 }
