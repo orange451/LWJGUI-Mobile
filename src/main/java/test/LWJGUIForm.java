@@ -1,5 +1,8 @@
 package test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.lwjgl.glfw.GLFW;
 import org.mini.glfm.Glfm;
 import org.mini.gui.GForm;
@@ -39,20 +42,35 @@ public class LWJGUIForm extends GForm {
     	window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, pressed?1:0, 0);
     }
     
-    private boolean touched;
+    private Map<Integer, TouchObject> touchedMap = new HashMap<>();;
 
     @Override
     public void touchEvent(int touchid, int phase, int x, int y) {
     	window.getCursorPosCallback().invoke(window.getID(), x, y);
-    	if ( phase == Glfm.GLFMTouchPhaseBegan && !touched ) {
-    		touched = true;
-    		window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, 1, 0);
-    	}    	
     	
-    	if ( phase == Glfm.GLFMTouchPhaseEnded && touched ) {
-    		touched = false;
-    		window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, 0, 0);
+    	if ( !touchedMap.containsKey(touchid) )
+    		touchedMap.put(touchid, new TouchObject());
+
+    	touchedMap.get(touchid).x = x;
+    	touchedMap.get(touchid).y = y;
+    	
+    	if ( touchid == 0 ) { // Only let the first touch interact with buttons
+	    	if ( phase == Glfm.GLFMTouchPhaseBegan && !touchedMap.get(touchid).touched ) {
+	    		touchedMap.get(touchid).touched = true;
+	    		window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, 1, 0);
+	    	}    	
+	    	
+	    	if ( phase == Glfm.GLFMTouchPhaseEnded && touchedMap.get(touchid).touched ) {
+	    		touchedMap.get(touchid).touched = false;
+	    		window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, 0, 0);
+	    	}
     	}
+    }
+    
+    private static class TouchObject {
+    	float x;
+    	float y;
+    	boolean touched;
     }
 	
 	private void updateSize() {
@@ -72,7 +90,12 @@ public class LWJGUIForm extends GForm {
 		window.render();
 
 		LWJGUIUtil.fillRect(window.getContext(), 0, 0, window.getScene().getWidth(), window.getScene().getHeight(), Color.WHITE_SMOKE);
-		LWJGUIUtil.fillRect(window.getContext(), window.getMouseHandler().getX()-4, window.getMouseHandler().getY()-4, 8, 8, Color.RED);
+		
+		for (TouchObject touch : touchedMap.values()) {
+			if ( !touch.touched )
+				continue;
+			LWJGUIUtil.fillRect(window.getContext(), touch.x-4, touch.y-4, 8, 8, Color.RED);
+		}
 		
 		// Force flush
 		GForm.flush();

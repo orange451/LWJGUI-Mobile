@@ -6,8 +6,8 @@ import org.mini.gui.GLanguage;
 
 import lwjgui.scene.Scene;
 
-public abstract class LWJGUIMobileApplication extends GApplication {
-	LWJGUIForm form;
+public abstract class MobileApplication extends GApplication {
+	protected LWJGUIForm form;
 	
 	public abstract void start(Scene scene);
 

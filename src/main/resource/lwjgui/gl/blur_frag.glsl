@@ -25,8 +25,8 @@ void main(void) {
    vec4 result = vec4(0.0);
    
    vec2 hlim = vec2(float(-uBlurSize) * 0.5 + 0.5);
-   for (int i = 0; i < uBlurSize; ++i) {
-      for (int j = 0; j < uBlurSize; ++j) {
+   for (int i = 0; i < int(uBlurSize); ++i) {
+      for (int j = 0; j < int(uBlurSize); ++j) {
          vec2 offset = (hlim + vec2(float(i), float(j))) * uTexelSize;
          result += vec4(texture(colorSampler, passTexCoord + offset).rgb,1.0);
       }

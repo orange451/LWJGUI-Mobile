@@ -130,7 +130,7 @@ public class NanoVG extends Nanovg {
 
 	public static void nvgText(long vg, float xx, float yy, String text) {
 		byte[] dat = toUtf8(text);
-		Nanovg.nvgTextBoxJni(vg, xx, yy, 128, dat, 0, dat.length);
+		Nanovg.nvgTextJni(vg, xx, yy, dat, 0, dat.length);
 	}
 	
     private static byte[] toUtf8(String s) {

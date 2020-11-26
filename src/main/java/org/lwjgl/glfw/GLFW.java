@@ -97,8 +97,8 @@ public class GLFW extends Glfw {
 	}
 	
 	public static void glfwGetFramebufferSize(long windowId, int[] x, int[] y) {
-		x[0] = GCallBack.getInstance().getDeviceWidth();
-		y[0] = GCallBack.getInstance().getDeviceHeight();
+		x[0] = GCallBack.getInstance().getFrameBufferWidth();
+		y[0] = GCallBack.getInstance().getFrameBufferHeight();
 	}
 	
 	public static void glfwGetWindowSize(long windowId, int[] x, int[] y) {

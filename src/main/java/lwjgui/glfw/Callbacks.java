@@ -68,9 +68,8 @@ public final class Callbacks {
 			implements GLFWMouseButtonCallbackI {
 		@Override
 		public void invoke(long window, int button, int action, int mods) {
-			for (GLFWMouseButtonCallbackI callback : callbacks) {
+			for (GLFWMouseButtonCallbackI callback : callbacks)
 				callback.invoke(window, button, action, mods);
-			}
 		}
 	}
 

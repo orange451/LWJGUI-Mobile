@@ -8,6 +8,8 @@ import static org.mini.gl.GL.glGetString;
 import org.mini.glfm.Glfm;
 import org.mini.gui.GForm;
 
+import lwjgui.font.Font;
+import lwjgui.font.FontStyle;
 import lwjgui.geometry.Pos;
 import lwjgui.paint.Color;
 import lwjgui.scene.Scene;
@@ -15,8 +17,9 @@ import lwjgui.scene.control.Label;
 import lwjgui.scene.control.PopupWindow;
 import lwjgui.scene.layout.BorderPane;
 import lwjgui.scene.layout.StackPane;
+import lwjgui.util.OperatingSystem;
 
-public class MyApp extends LWJGUIMobileApplication {
+public class MyApp extends MobileApplication {
 
 	@Override
 	public void start(Scene scene) {
@@ -29,13 +32,18 @@ public class MyApp extends LWJGUIMobileApplication {
 		top.setAlignment(Pos.BOTTOM_CENTER);
 		top.setStyle(""
 				+ "background-color:white;"
-				+ "height:64px;"
+				+ "height:80px;"
 				+ "border-color:darkgray;"
-				+ "border-bottom:1px;"
+				+ "border-bottom:2px;"
 				+ "box-shadow: 0px 1px 6px;"
-				+ "padding: 4px;");
+				+ "padding: 2px;");
 		root.setTop(top);
-		top.getChildren().add(new Label("Top bar"));
+		
+		Label text = new Label("Test App");
+		text.setFont(Font.CONSOLAS);
+		text.setFontStyle(FontStyle.BOLD);
+		text.setStyle("font-size:30px");
+		top.getChildren().add(text);
 		
 		
 		// Test
@@ -91,6 +99,7 @@ public class MyApp extends LWJGUIMobileApplication {
         System.out.println("Vendor : " + glVendor);
         System.out.println("Renderer : " + glRenderer);
         System.out.println("Version : " + glVersion);
+        System.out.println("Operating System : " + OperatingSystem.detect());
         
         // Top bar
         Glfm.glfmSetMultitouchEnabled(this.form.getCallBack().getDisplay(), true);
