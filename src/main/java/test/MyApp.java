@@ -11,7 +11,9 @@ import org.mini.gui.GForm;
 import lwjgui.font.Font;
 import lwjgui.font.FontStyle;
 import lwjgui.geometry.Pos;
+import lwjgui.scene.Node;
 import lwjgui.scene.Scene;
+import lwjgui.scene.control.Button;
 import lwjgui.scene.control.Label;
 import lwjgui.scene.control.PopupWindow;
 import lwjgui.scene.layout.BorderPane;
@@ -78,7 +80,7 @@ public class MyApp extends MobileApplication {
 		});
 
 		// Add text
-		Label testLabel = new Label("Hello World");
+		Node testLabel = new Button("Hello World");
 		testLabel.setMouseTransparent(true);
 		t.getChildren().add(testLabel);
 
@@ -89,10 +91,11 @@ public class MyApp extends MobileApplication {
         String glVendor = new String(glGetString(GL_VENDOR));
         String glRenderer = new String(glGetString(GL_RENDERER));
         String glVersion = new String(glGetString(GL_VERSION));
+        String opSystem = OperatingSystem.detect().toString();
         System.out.println("Vendor : " + glVendor);
         System.out.println("Renderer : " + glRenderer);
         System.out.println("Version : " + glVersion);
-        System.out.println("Operating System : " + OperatingSystem.detect());
+        System.out.println("Operating System : " + opSystem);
         System.out.println("Screen Size : " + GCallBack.getInstance().getDeviceWidth() + "x" + GCallBack.getInstance().getDeviceHeight());
 	}
 }

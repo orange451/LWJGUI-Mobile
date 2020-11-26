@@ -2,6 +2,7 @@ package mobile.lwjgui;
 
 import org.mini.gui.GCallBack;
 
+import lwjgui.LWJGUI;
 import lwjgui.collections.ObservableList;
 import lwjgui.font.Font;
 import lwjgui.font.FontStyle;
@@ -28,10 +29,12 @@ public class AlertBase extends PopupWindow {
 	private ObservableList<AlertButton> buttons;
 	
 	public AlertBase() {
-		this.setPrefSize(GCallBack.getInstance().getDeviceWidth(), GCallBack.getInstance().getDeviceHeight());
+		this.setPrefWidthRatio(new Percentage(100));
+		this.setPrefHeightRatio(new Percentage(100));
 		this.setBackgroundLegacy(Color.DARK_GRAY.alpha(0.4f));
 		
-		float width = (float) (Math.min(this.getPrefWidth(), this.getPrefHeight())) * 0.8f;
+		float width = (float) (Math.min(GCallBack.getInstance().getDeviceWidth(), GCallBack.getInstance().getDeviceHeight())) * 0.8f;
+		width = Math.min(width, 350);
 		
 		this.alertPane = new VBox();
 		((VBox)this.alertPane).setSpacing(0);
@@ -39,18 +42,18 @@ public class AlertBase extends PopupWindow {
 		this.alertPane.getBoxShadowList().add(new BoxShadow(16, 16, 48, 0.33f));
 		this.alertPane.setMaxWidth(width);
 		this.alertPane.setStylesheet(""
-				+ ".alert-button {"
-				+ "		background-color: rgb(235, 235, 235);"
-				+ "		border-color: SILVER;"
-				+ "		padding:16px;"
-				+ "		color:aqua;"
-				+ "}"
 				+ ".alert-body {"
 				+ "		background-color: rgb(235, 235, 235);"
 				+ "		border-color: SILVER;"
 				+ "		padding:16px;"
 				+ "		border-bottom:1px;"
 				+ "		border-style:solid;"
+				+ "}"
+				+ ".alert-button {"
+				+ "		background-color: rgb(235, 235, 235);"
+				+ "		border-color: SILVER;"
+				+ "		padding:16px;"
+				+ "		color:aqua;"
 				+ "}"
 				+ "");
 		
@@ -86,7 +89,7 @@ public class AlertBase extends PopupWindow {
 			
 			for (int i = 0; i < this.buttons.size(); i++) {
 				AlertButton b = this.buttons.get(i);
-				b.backedButton.setPrefWidth(width/(float)this.buttons.size());
+				b.backedButton.setPrefWidthRatio(Percentage.fromRatio(1/(float)this.buttons.size()));
 				if ( i == 0 )
 					b.backedButton.setBorderRadii(0, 0, 0, 16);
 				else if ( i == this.buttons.size()-1 )

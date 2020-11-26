@@ -669,7 +669,7 @@ public abstract class Node implements Resizable {
 		
 		while ( p != null ) {
 			double use = p.getMaxWidth();
-			if ( use > Double.MAX_VALUE*0.9 )
+			if ( use > Double.MAX_VALUE*0.5 )
 				use = p.getWidth();
 			
 			max = Math.min(max, use);
@@ -687,7 +687,7 @@ public abstract class Node implements Resizable {
 		
 		while ( p != null ) {
 			double use = p.getMaxHeight();
-			if ( use > Double.MAX_VALUE*0.9 )
+			if ( use > Double.MAX_VALUE*0.5 )
 				use = p.getHeight();
 			
 			max = Math.min(max, use);
@@ -1129,11 +1129,27 @@ public abstract class Node implements Resizable {
 	}
 	
 	/**
+	 * Returns the preferred width ratio of this node as a percentage.
+	 * @return
+	 */
+	public Percentage getPrefWidthRatio() {
+		return this.prefwidthRatio;
+	}
+	
+	/**
 	 * Returns the preferred height of this node.
 	 * @return
 	 */
 	public double getPrefHeight() {
 		return prefsize.y;
+	}
+	
+	/**
+	 * Returns the preferred height ratio of this node as a percentage.
+	 * @return
+	 */
+	public Percentage getPrefHeightRatio() {
+		return this.prefheightRatio;
 	}
 	
 	/**

@@ -28,6 +28,9 @@ class LWJGUIForm extends GForm {
 		// Create (fake) GLFW window. Wrap to LWJGUI window
 		window = WindowManager.generateWindow(0);
 		
+		// Give it focus
+		window.getWindowFocusCallback().invoke(window.getID(), true);
+		
 		// Resize when parent changes
 		this.setSizeChangeListener((width, height)-> { updateSize(); });
 		updateSize();
