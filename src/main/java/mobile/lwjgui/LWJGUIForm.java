@@ -1,4 +1,4 @@
-package test;
+package mobile.lwjgui;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import lwjgui.scene.layout.StackPane;
 import lwjgui.style.BackgroundLinearGradient;
 import lwjgui.style.BoxShadow;
 
-public class LWJGUIForm extends GForm {
+class LWJGUIForm extends GForm {
 	private Window window;
 	
 	public LWJGUIForm() {

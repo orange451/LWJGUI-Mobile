@@ -5,38 +5,46 @@ import static org.mini.gl.GL.GL_VENDOR;
 import static org.mini.gl.GL.GL_VERSION;
 import static org.mini.gl.GL.glGetString;
 
-import org.mini.glfm.Glfm;
+import org.mini.gui.GCallBack;
 import org.mini.gui.GForm;
 
 import lwjgui.font.Font;
 import lwjgui.font.FontStyle;
 import lwjgui.geometry.Pos;
-import lwjgui.paint.Color;
 import lwjgui.scene.Scene;
 import lwjgui.scene.control.Label;
 import lwjgui.scene.control.PopupWindow;
 import lwjgui.scene.layout.BorderPane;
 import lwjgui.scene.layout.StackPane;
 import lwjgui.util.OperatingSystem;
+import mobile.lwjgui.Alert;
+import mobile.lwjgui.MobileApplication;
 
 public class MyApp extends MobileApplication {
 
 	@Override
 	public void start(Scene scene) {
+		// ENable status bar
+		showStatusBar();
+		
+		// Get root pane
 		BorderPane root = new BorderPane();
 		scene.setRoot(root);
 		
 		// Top pane
 		StackPane top = new StackPane();
-		top.setFillToParentWidth(true);
+		top.getClassList().add("top-bar");
 		top.setAlignment(Pos.BOTTOM_CENTER);
-		top.setStyle(""
-				+ "background-color:white;"
-				+ "height:80px;"
-				+ "border-color:darkgray;"
-				+ "border-bottom:2px;"
-				+ "box-shadow: 0px 1px 6px;"
-				+ "padding: 2px;");
+		top.setStylesheet(""
+				+ ".top-bar {"
+				+ "		background-color:white;"
+				+ "		height:12%;"
+				+ "		width:100%;"
+				+ "		border-color:darkgray;"
+				+ "		border-bottom:2px;"
+				+ "		box-shadow: 0px 1px 6px;"
+				+ "		padding: 2px;"
+				+ "}");
 		root.setTop(top);
 		
 		Label text = new Label("Test App");
@@ -65,19 +73,7 @@ public class MyApp extends MobileApplication {
 		root.setCenter(t);
 		
 		t.setOnMouseClicked((event)->{
-			Glfm.glfmSetKeyboardVisible(this.form.getCallBack().getDisplay(), true);
-			
-			PopupWindow test = new PopupWindow() {
-				{
-					this.setPrefSize(scene.getWidth(), scene.getHeight());
-					this.setBackgroundLegacy(Color.DARK_GRAY.alpha(0.5f));
-					
-					this.setOnMouseClicked((event)->{
-						Glfm.glfmSetKeyboardVisible(form.getCallBack().getDisplay(), false);
-						this.close();
-					});
-				}
-			};
+			PopupWindow test = new Alert("Hello Alert");
 			test.show(scene, 0, 0);
 		});
 
@@ -90,19 +86,13 @@ public class MyApp extends MobileApplication {
         GForm.addMessage("Hello World!");
         
         // GL Info
-        byte[] name = glGetString(GL_VENDOR);
-        byte[] biaoshifu = glGetString(GL_RENDERER);
-        byte[] OpenGLVersion = glGetString(GL_VERSION);
-        String glVendor = new String(name);
-        String glRenderer = new String(biaoshifu);
-        String glVersion = new String(OpenGLVersion);
+        String glVendor = new String(glGetString(GL_VENDOR));
+        String glRenderer = new String(glGetString(GL_RENDERER));
+        String glVersion = new String(glGetString(GL_VERSION));
         System.out.println("Vendor : " + glVendor);
         System.out.println("Renderer : " + glRenderer);
         System.out.println("Version : " + glVersion);
         System.out.println("Operating System : " + OperatingSystem.detect());
-        
-        // Top bar
-        Glfm.glfmSetMultitouchEnabled(this.form.getCallBack().getDisplay(), true);
-        Glfm.glfmSetDisplayChrome(this.form.getCallBack().getDisplay(), Glfm.GLFMUserInterfaceChromeNavigationAndStatusBar);
+        System.out.println("Screen Size : " + GCallBack.getInstance().getDeviceWidth() + "x" + GCallBack.getInstance().getDeviceHeight());
 	}
 }

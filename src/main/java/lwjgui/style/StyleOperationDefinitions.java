@@ -32,7 +32,12 @@ public class StyleOperationDefinitions {
 			if ( value.size() == 0 )
 				value = new StyleVarArgs(new StyleParams(0));
 			
-			node.setPrefWidth(toNumber(value.get(0).get(0)));
+			Object x = value.get(0).get(0);
+			if ( x instanceof Percentage ) {
+				node.setPrefWidthRatio(((Percentage)x));
+			} else {
+				node.setPrefWidth(toNumber(x));
+			}
 		}
 	};
 	
@@ -61,8 +66,15 @@ public class StyleOperationDefinitions {
 		public void process(Node node, StyleVarArgs value) {
 			if ( value.size() == 0 )
 				value = new StyleVarArgs(new StyleParams(0));
-			
-			node.setPrefHeight(toNumber(value.get(0).get(0)));
+						
+			Object x = value.get(0).get(0);
+			if ( x instanceof Percentage ) {
+				node.setPrefHeightRatio(((Percentage)x));
+			} else if ( x instanceof StyleFunction ) {
+				// TODO implement generic style function resolver
+			} else {
+				node.setPrefHeight(toNumber(x));
+			}
 		}
 	};
 	

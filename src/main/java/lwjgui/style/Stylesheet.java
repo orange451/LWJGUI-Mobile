@@ -546,26 +546,6 @@ public class Stylesheet {
 		}
 	}
 
-	class Percentage {
-		private double percent;
-
-		public Percentage(double percent) {
-			this.percent = percent;
-		}
-
-		public double getPercent() {
-			return percent;
-		}
-
-		public double getValue() {
-			return percent / 100d;
-		}
-		
-		public String toString() {
-			return percent + "%";
-		}
-	}
-
 	class StyleSelector {
 		private String selector;
 		private StyleSelectorType type;
