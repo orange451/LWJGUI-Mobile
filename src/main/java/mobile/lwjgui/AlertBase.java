@@ -8,6 +8,7 @@ import lwjgui.font.FontStyle;
 import lwjgui.geometry.Insets;
 import lwjgui.geometry.Pos;
 import lwjgui.paint.Color;
+import lwjgui.scene.Node;
 import lwjgui.scene.control.Button;
 import lwjgui.scene.control.PopupWindow;
 import lwjgui.scene.layout.HBox;
@@ -18,11 +19,13 @@ import lwjgui.style.BoxShadow;
 import lwjgui.style.Percentage;
 import lwjgui.transition.SizeTransition;
 
-public class AlertBase extends PopupWindow {
+class AlertBase extends PopupWindow {
 	
 	private Pane alertPane;
 	
 	private Pane body;
+	
+	private Node innerBody;
 	
 	private HBox buttonPane;
 
@@ -108,61 +111,92 @@ public class AlertBase extends PopupWindow {
 		
 		this.buttons = new ObservableList<>();
 		this.buttons.setAddCallback((element)->{
-			Button button = new Button(element.label);
+			if ( this.buttons.size() == 1 )
+				this.buttonPane.getChildren().clear();
+			
+			Button button = new Button(element.getLabel());
 			this.buttonPane.getChildren().add(button);
-			element.backedButton = button;
+			element.setButton(button);
 			
 			button.setFontStyle(FontStyle.BOLD);
 			button.setFont(Font.SEGOE);
 			
 			button.getClassList().add("alert-button");
 			button.setOnAction((event)->{
-				element.callback.run();
+				element.getCallback().run();
 			});
 			
-			for (int i = 0; i < this.buttons.size(); i++) {
-				AlertButton b = this.buttons.get(i);
-				b.backedButton.setPrefWidthRatio(Percentage.fromRatio(1/(float)this.buttons.size()));
-				if ( i == 0 )
-					b.backedButton.setBorderRadii(0, 0, 0, 16);
-				else if ( i == this.buttons.size()-1 )
-					b.backedButton.setBorderRadii(0, 0, 16, 0);
-				else
-					b.backedButton.setBorderRadii(0, 0, 0, 0);
-				
-				if ( i < this.buttons.size()-1 )
-					b.backedButton.setBorder(new Insets(0, 1, 0, 0));
-				else
-					b.backedButton.setBorder(new Insets(0, 0, 0, 0));
-					
-			}
+			updateButtons();
 		});
 		this.buttons.setRemoveCallback((element)->{
-			Button b = element.backedButton;
+			Button b = element.getButton();
 			if ( b == null )
 				return;
 			
 			this.buttonPane.getChildren().remove(b);
-			element.backedButton = null;
+			element.setButton(null);
+			
+			checkEmptyButtons();
 		});
+		
+		checkEmptyButtons();
 	}
 	
-	public Pane getBody() {
-		return this.body;
+	private void checkEmptyButtons() {
+		if ( this.buttons.size() > 0 )
+			return;
+		
+		Button button = new Button("tap to dismiss");
+		button.setFont(Font.SEGOE);
+		button.setStyle("color:rgb(96, 96, 96); width:100%;");
+		button.getClassList().add("alert-button");
+		button.setOnAction((event)->{
+			this.close();
+		});
+
+		this.buttonPane.getChildren().add(button);
+		updateButtons();
+	}
+	
+	private void updateButtons() {
+		for (int i = 0; i < this.buttonPane.getChildren().size(); i++) {
+			Node node = this.buttonPane.getChildren().get(i);
+			if ( !(node instanceof Button) )
+				continue;
+			
+			Button b = (Button)node;
+			b.setPrefWidthRatio(Percentage.fromRatio(1/(float)this.buttons.size()));
+			
+			float bl = 0;
+			float br = 0;
+			
+			if ( i == 0 )
+				bl = 16;
+			if ( i == this.buttons.size()-1 || this.buttons.size() == 0 )
+				br = 16;
+			b.setBorderRadii(0, 0, br, bl);
+			
+			if ( i < this.buttons.size()-1 )
+				b.setBorder(new Insets(0, 1, 0, 0));
+			else
+				b.setBorder(new Insets(0, 0, 0, 0));
+		}
+	}
+	
+	public Node getBody() {
+		return this.innerBody;
+	}
+
+	public void setBody(Node body) {
+		this.body.getChildren().clear();
+		this.innerBody = body;
+		if ( body == null )
+			return;
+		
+		this.body.getChildren().add(body);
 	}
 	
 	public ObservableList<AlertButton> getButtons() {
 		return this.buttons;
-	}
-	
-	public static class AlertButton {
-		private String label;
-		private Runnable callback;
-		private Button backedButton;
-		
-		public AlertButton(String label, Runnable callback) {
-			this.label = label;
-			this.callback = callback;
-		}
 	}
 }

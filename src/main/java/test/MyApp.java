@@ -15,11 +15,11 @@ import lwjgui.scene.Node;
 import lwjgui.scene.Scene;
 import lwjgui.scene.control.Button;
 import lwjgui.scene.control.Label;
-import lwjgui.scene.control.PopupWindow;
 import lwjgui.scene.layout.BorderPane;
 import lwjgui.scene.layout.StackPane;
 import lwjgui.util.OperatingSystem;
 import mobile.lwjgui.Alert;
+import mobile.lwjgui.AlertButton;
 import mobile.lwjgui.MobileApplication;
 
 public class MyApp extends MobileApplication {
@@ -75,13 +75,24 @@ public class MyApp extends MobileApplication {
 		root.setCenter(t);
 		
 		t.setOnMouseClicked((event)->{
-			PopupWindow test = new Alert("Hello Alert");
-			test.show(scene, 0, 0);
+			Alert test = new Alert("Hello Alert");
+			
+			test.getButtons().add(new AlertButton("Cancel", ()-> {
+				test.close();
+			}));
+
+			test.getButtons().add(new AlertButton("OK", ()-> {
+				test.close();
+				
+				new Alert("Thank you for pressing ok!").show(scene);
+			}));
+			
+			test.show(scene);
 		});
 
 		// Add text
-		Node testLabel = new Button("Hello World");
-		//testLabel.setMouseTransparent(true);
+		Node testLabel = new Label("Hello World");
+		testLabel.setMouseTransparent(true);
 		t.getChildren().add(testLabel);
 
 		// Pop up
