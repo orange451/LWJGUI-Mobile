@@ -2,7 +2,6 @@ package mobile.lwjgui;
 
 import org.mini.gui.GCallBack;
 
-import lwjgui.LWJGUI;
 import lwjgui.collections.ObservableList;
 import lwjgui.font.Font;
 import lwjgui.font.FontStyle;
@@ -17,6 +16,7 @@ import lwjgui.scene.layout.StackPane;
 import lwjgui.scene.layout.VBox;
 import lwjgui.style.BoxShadow;
 import lwjgui.style.Percentage;
+import lwjgui.transition.SizeTransition;
 
 public class AlertBase extends PopupWindow {
 	
@@ -36,11 +36,21 @@ public class AlertBase extends PopupWindow {
 		float width = (float) (Math.min(GCallBack.getInstance().getDeviceWidth(), GCallBack.getInstance().getDeviceHeight())) * 0.8f;
 		width = Math.min(width, 350);
 		
+		VBox positionBox = new VBox();
+		positionBox.setAlignment(Pos.CENTER);
+		positionBox.setFillToParentWidth(true);
+		this.getChildren().add(positionBox);
+		
+		Pane paddingPane = new StackPane();
+		paddingPane.setFillToParentWidth(true);
+		paddingPane.setPrefHeight(64);
+		positionBox.getChildren().add(paddingPane);
+		
 		this.alertPane = new VBox();
 		((VBox)this.alertPane).setSpacing(0);
 		this.alertPane.setPrefSize(width, 16);
-		this.alertPane.getBoxShadowList().add(new BoxShadow(16, 16, 48, 0.33f));
 		this.alertPane.setMaxWidth(width);
+		this.alertPane.getBoxShadowList().add(new BoxShadow(16, 16, 48, 0.33f));
 		this.alertPane.setStylesheet(""
 				+ ".alert-body {"
 				+ "		background-color: rgb(235, 235, 235);"
@@ -57,7 +67,30 @@ public class AlertBase extends PopupWindow {
 				+ "}"
 				+ "");
 		
-		this.getChildren().add(alertPane);
+		positionBox.getChildren().add(alertPane);
+		
+		SizeTransition transition = new SizeTransition(500l, 0, 0) {
+			@Override
+			protected double getCurrentWidth() {
+				return paddingPane.getWidth();
+			}
+
+			@Override
+			protected double getCurrentHeight() {
+				return paddingPane.getHeight();
+			}
+
+			@Override
+			protected void setWidth(double width) {
+				//
+			}
+
+			@Override
+			protected void setHeight(double height) {
+				paddingPane.setPrefHeight(height);
+			}
+		};
+		transition.play();
 		
 		this.body = new StackPane();
 		this.body.setAlignment(Pos.CENTER);

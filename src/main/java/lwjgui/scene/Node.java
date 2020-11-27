@@ -44,6 +44,8 @@ public abstract class Node implements Resizable {
 	protected LayoutBounds layoutBounds = new LayoutBounds(0,0,Integer.MAX_VALUE,Integer.MAX_VALUE);
 	protected Insets padding = new Insets(0,0,0,0);
 	protected Pos alignment = Pos.CENTER;
+	
+	protected boolean doubleBuffer;
 
 	protected Bounds nodeBounds = new Bounds(0, 0, 0, 0);
 	
@@ -308,6 +310,8 @@ public abstract class Node implements Resizable {
 			// Perform actual sizing/positioning
 			updateChildren();
 			resize();
+			if (doubleBuffer)
+				updateChildren();
 			computeAbsolutePosition();
 		}
 		stylePop();

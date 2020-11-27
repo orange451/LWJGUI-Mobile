@@ -81,7 +81,7 @@ public class MyApp extends MobileApplication {
 
 		// Add text
 		Node testLabel = new Button("Hello World");
-		testLabel.setMouseTransparent(true);
+		//testLabel.setMouseTransparent(true);
 		t.getChildren().add(testLabel);
 
 		// Pop up
