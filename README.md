@@ -1,2 +1,2 @@
-# MiniJVM-TestApplication
-Attempt at getting LWJGUI to work with MiniJVM
+# LWJGUI-Mobile
+Port of LWJGUI for MiniJVM.
