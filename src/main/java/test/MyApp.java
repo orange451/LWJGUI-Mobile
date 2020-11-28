@@ -76,7 +76,7 @@ public class MyApp extends MobileApplication {
 		
 		t.setOnMouseClicked((event)->{
 			Alert test = new Alert("Hello Alert");
-			test.setOrientation(Orientation.VERTICAL);
+			test.setOrientation(Orientation.HORIZONTAL);
 			
 			test.getButtons().add(new AlertButton("Cancel", ()-> {
 				test.close();

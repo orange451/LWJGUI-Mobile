@@ -6,6 +6,8 @@ import java.util.Map;
 import org.lwjgl.glfw.GLFW;
 import org.mini.glfm.Glfm;
 import org.mini.gui.GForm;
+import org.mini.gui.GObject;
+
 import lwjgui.LWJGUIUtil;
 import lwjgui.paint.Color;
 import lwjgui.scene.Window;
@@ -13,6 +15,8 @@ import lwjgui.scene.WindowManager;
 
 class LWJGUIForm extends GForm {
 	private Window window;
+	
+	private long mainvg = -1;
 	
 	public LWJGUIForm() {
 		super();
@@ -35,6 +39,7 @@ class LWJGUIForm extends GForm {
     public void mouseButtonEvent(int button, boolean pressed, int x, int y) {
     	window.getCursorPosCallback().invoke(window.getID(), x, y);
     	window.getMouseButtonCallback().invoke(window.getID(), GLFW.GLFW_MOUSE_BUTTON_LEFT, pressed?1:0, 0);
+    	GObject.flush();
     }
     
     private Map<Integer, TouchObject> touchedMap = new HashMap<>();;
@@ -71,6 +76,9 @@ class LWJGUIForm extends GForm {
 	private void updateSize() {
 		window.getWindowSizeCallback().invoke(window.getID(), this.callback.getDeviceWidth(), this.callback.getDeviceHeight());
 		window.getFramebufferSizeCallback().invoke(window.getID(), this.callback.getFrameBufferWidth(), this.callback.getFrameBufferHeight());
+		
+		if ( mainvg > -1 )
+			display(mainvg);
 	}
 
 	public Window getWindow() {
@@ -80,6 +88,8 @@ class LWJGUIForm extends GForm {
 	@Override
 	public boolean paint(long vg) {
 		super.paint(vg);
+		
+		mainvg = vg;
 		
 		// Render our lwjgui window
 		window.render();
