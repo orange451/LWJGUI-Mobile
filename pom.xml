@@ -12,38 +12,35 @@
     </properties>
 
 
-    <!--    <dependencies>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.minijvm</groupId>  -->
-    <!--            <artifactId>minijvm_rt</artifactId>   -->
-    <!--            <version>1.0</version>-->
-    <!--            <scope>system</scope> -->
-    <!--            <systemPath>${basedir}/../../assets/resfiles/minijvm_rt.jar</systemPath> -->
-    <!--        </dependency> -->
-    <!--        <dependency>-->
-    <!--            <groupId>org.minijvm</groupId>  -->
-    <!--            <artifactId>glfm_gui</artifactId>   -->
-    <!--            <version>1.0</version>-->
-    <!--            <scope>system</scope> -->
-    <!--            <systemPath>${basedir}/../../assets/resfiles/glfm_gui.jar</systemPath> -->
-    <!--        </dependency> -->
-    <!--    </dependencies>-->
-
-    <dependencies>
-        <dependency>
-            <groupId>org.minijvm</groupId>
-            <artifactId>minijvm_rt</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/../../../binary/lib/minijvm_rt.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>org.minijvm</groupId>
-            <artifactId>glfm_gui</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/../../../binary/libex/glfm_gui.jar</systemPath>
-        </dependency>
+        <dependencies>
+            <dependency>
+                <groupId>org.minijvm</groupId>
+                <artifactId>minijvm_rt</artifactId>
+                <version>1.0</version>
+                <scope>system</scope>
+                <systemPath>${basedir}/../miniJVM/mobile/assets/resfiles/minijvm_rt.jar</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>org.minijvm</groupId>
+                <artifactId>glfm_gui</artifactId>
+                <version>1.0</version>
+                <scope>system</scope>
+                <systemPath>${basedir}/../miniJVM/mobile/assets/resfiles/glfm_gui.jar</systemPath>
+            </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.minijvm</groupId>-->
+<!--            <artifactId>minijvm_rt</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${basedir}/../miniJVM/binary/lib/minijvm_rt.jar</systemPath>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.minijvm</groupId>-->
+<!--            <artifactId>glfm_gui</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${basedir}/../miniJVM/binary/libex/glfw_gui.jar</systemPath>-->
+<!--        </dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.joml/joml -->
 		<dependency>
 		    <groupId>org.joml</groupId>
@@ -66,15 +63,15 @@
                         <configuration>
                             <tasks>
                                 <!--  copy to binary lib dir -->
-                                <mkdir dir="../../assets/resfiles"/>
-                                <copy todir="../../assets/resfiles/" overwrite="true">
+                                <mkdir dir="${basedir}/../miniJVM/mobile/assets/resfiles"/>
+                                <copy todir="${basedir}/../miniJVM/mobile/assets/resfiles" overwrite="true">
                                     <fileset dir="${project.build.directory}" erroronmissingdir="false">
                                         <include name="${project.artifactId}.jar"/>
                                     </fileset>
                                 </copy>
 
-                                <mkdir dir="${basedir}/../../../miniJVM/binary/macos/apps/"/>
-                                <copy todir="${basedir}/../../../binary/macos/apps/" overwrite="true" >
+                                <mkdir dir="${basedir}/../miniJVM/binary/macos/apps/"/>
+                                <copy todir="${basedir}/../miniJVM/binary/macos/apps/" overwrite="true" >
                                     <fileset dir="${project.build.directory}" erroronmissingdir="false">
                                         <include name="${project.artifactId}.jar"/>
                                     </fileset>
