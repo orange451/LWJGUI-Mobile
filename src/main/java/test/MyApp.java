@@ -10,10 +10,10 @@ import org.mini.gui.GForm;
 
 import lwjgui.font.Font;
 import lwjgui.font.FontStyle;
+import lwjgui.geometry.Orientation;
 import lwjgui.geometry.Pos;
 import lwjgui.scene.Node;
 import lwjgui.scene.Scene;
-import lwjgui.scene.control.Button;
 import lwjgui.scene.control.Label;
 import lwjgui.scene.layout.BorderPane;
 import lwjgui.scene.layout.StackPane;
@@ -76,6 +76,7 @@ public class MyApp extends MobileApplication {
 		
 		t.setOnMouseClicked((event)->{
 			Alert test = new Alert("Hello Alert");
+			test.setOrientation(Orientation.VERTICAL);
 			
 			test.getButtons().add(new AlertButton("Cancel", ()-> {
 				test.close();

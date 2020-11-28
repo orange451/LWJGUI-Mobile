@@ -172,8 +172,6 @@ public abstract class ButtonBase extends Labeled implements BlockPaneRenderer {
 	protected void position(Node parent) {
 		defaultStyle();
 		super.position(parent);
-		
-		//System.out.println(this.getPrefWidthRatio() + " / " + this.getMaxPotentialWidth() + " / " + this.getAvailableSize());
 	}
 	
 	private void defaultStyle() {

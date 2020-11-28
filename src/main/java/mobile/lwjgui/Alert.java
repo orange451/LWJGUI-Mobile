@@ -1,6 +1,7 @@
 package mobile.lwjgui;
 
 import lwjgui.collections.ObservableList;
+import lwjgui.geometry.Orientation;
 import lwjgui.scene.Node;
 import lwjgui.scene.Scene;
 import lwjgui.scene.control.Label;
@@ -32,5 +33,13 @@ public class Alert {
 	
 	public void setBody(Node node) {
 		this.alertBase.setBody(node);
+	}
+
+	public void setOrientation(Orientation orientation) {
+		alertBase.setOrientation(orientation);
+	}
+	
+	public Orientation getOrientation() {
+		return alertBase.getOrientation();
 	}
 }

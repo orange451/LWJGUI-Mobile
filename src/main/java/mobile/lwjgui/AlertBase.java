@@ -6,11 +6,13 @@ import lwjgui.collections.ObservableList;
 import lwjgui.font.Font;
 import lwjgui.font.FontStyle;
 import lwjgui.geometry.Insets;
+import lwjgui.geometry.Orientation;
 import lwjgui.geometry.Pos;
 import lwjgui.paint.Color;
 import lwjgui.scene.Node;
 import lwjgui.scene.control.Button;
 import lwjgui.scene.control.PopupWindow;
+import lwjgui.scene.layout.DirectionalBox;
 import lwjgui.scene.layout.HBox;
 import lwjgui.scene.layout.Pane;
 import lwjgui.scene.layout.StackPane;
@@ -27,9 +29,11 @@ class AlertBase extends PopupWindow {
 	
 	private Node innerBody;
 	
-	private HBox buttonPane;
+	private DirectionalBox buttonPane;
 
 	private ObservableList<AlertButton> buttons;
+	
+	private Orientation orientation = Orientation.HORIZONTAL;
 	
 	public AlertBase() {
 		this.setPrefWidthRatio(new Percentage(100));
@@ -165,21 +169,36 @@ class AlertBase extends PopupWindow {
 				continue;
 			
 			Button b = (Button)node;
-			b.setPrefWidthRatio(Percentage.fromRatio(1/(float)this.buttons.size()));
 			
-			float bl = 0;
-			float br = 0;
-			
-			if ( i == 0 )
-				bl = 16;
-			if ( i == this.buttons.size()-1 || this.buttons.size() == 0 )
-				br = 16;
-			b.setBorderRadii(0, 0, br, bl);
-			
-			if ( i < this.buttons.size()-1 )
-				b.setBorder(new Insets(0, 1, 0, 0));
-			else
-				b.setBorder(new Insets(0, 0, 0, 0));
+			if ( this.orientation == Orientation.HORIZONTAL ) {
+				b.setPrefWidthRatio(Percentage.fromRatio(1/(float)this.buttons.size()));
+				
+				float bl = 0;
+				float br = 0;
+				
+				if ( i == 0 )
+					bl = 16;
+				if ( i == this.buttons.size()-1 || this.buttons.size() == 0 )
+					br = 16;
+				b.setBorderRadii(0, 0, br, bl);
+				
+				if ( i < this.buttons.size()-1 )
+					b.setBorder(new Insets(0, 1, 0, 0));
+				else
+					b.setBorder(new Insets(0, 0, 0, 0));
+			} else {
+				b.setPrefWidthRatio(Percentage.ONE_HUNDRED);
+		
+				if ( i == this.buttons.size()-1 || this.buttons.size() == 0 )
+					b.setBorderRadii(0, 0, 16, 16);
+				else
+					b.setBorderRadii(0, 0, 0, 0);
+				
+				if ( i < this.buttons.size()-1 )
+					b.setBorder(new Insets(0, 0, 1, 0));
+				else
+					b.setBorder(new Insets(0, 0, 0, 0));
+			}
 		}
 	}
 	
@@ -198,5 +217,33 @@ class AlertBase extends PopupWindow {
 	
 	public ObservableList<AlertButton> getButtons() {
 		return this.buttons;
+	}
+
+	public void setOrientation(Orientation orientation) {
+		this.orientation = orientation;
+		
+		DirectionalBox newButtonPane = null;
+		if ( orientation == Orientation.VERTICAL )
+			newButtonPane = new VBox();
+		else
+			newButtonPane = new HBox();
+		
+		newButtonPane.setSpacing(0);
+		newButtonPane.setAlignment(Pos.CENTER);
+		newButtonPane.setPrefWidthRatio(new Percentage(100));
+		
+		if ( this.buttonPane != null ) {
+			for (Node node : this.buttonPane.getChildren())
+				newButtonPane.getChildren().add(node);
+			this.alertPane.getChildren().remove(this.buttonPane);
+		}
+		
+		this.buttonPane = newButtonPane;
+		this.alertPane.getChildren().add(newButtonPane);
+		updateButtons();
+	}
+	
+	public Orientation getOrientation() {
+		return this.orientation;
 	}
 }

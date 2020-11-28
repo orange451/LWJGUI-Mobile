@@ -6,18 +6,10 @@ import java.util.Map;
 import org.lwjgl.glfw.GLFW;
 import org.mini.glfm.Glfm;
 import org.mini.gui.GForm;
-import org.mini.gui.GObject;
-import org.mini.gui.event.GActionListener;
-
 import lwjgui.LWJGUIUtil;
 import lwjgui.paint.Color;
-import lwjgui.scene.Scene;
 import lwjgui.scene.Window;
 import lwjgui.scene.WindowManager;
-import lwjgui.scene.control.Label;
-import lwjgui.scene.layout.StackPane;
-import lwjgui.style.BackgroundLinearGradient;
-import lwjgui.style.BoxShadow;
 
 class LWJGUIForm extends GForm {
 	private Window window;
